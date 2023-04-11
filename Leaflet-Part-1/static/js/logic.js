@@ -33,9 +33,12 @@ d3.json(url).then(function(response){
     //Create the markers
     for(j=0; j<earthquakeLocation.length;j++){
         L.circle(earthquakeLocation[j], {
-            
+            fillOpacity: 0.75,
+            color: markerColour(),
+            fillColor: markerColour(),
+            radius: markerRadius(),
 
-        })
-    }
+        }).bindPopup(``).addTo(myMap);
+    };
     
 });
