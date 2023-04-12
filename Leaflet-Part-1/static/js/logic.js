@@ -12,6 +12,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
 
+function markerColour(){};
+function markerRadius(magnitude){
+    return Math.sqrt(magnitude) * 500
+};
+
 d3.json(url).then(function(response){
     //Taking a preview at the data I'm pulling
     console.log(response);
@@ -32,11 +37,12 @@ d3.json(url).then(function(response){
 
     //Create the markers
     for(j=0; j<earthquakeLocation.length;j++){
+        let eqMagnitutde = features[i].properties[0];
         L.circle(earthquakeLocation[j], {
             fillOpacity: 0.75,
             color: markerColour(),
             fillColor: markerColour(),
-            radius: markerRadius(),
+            radius: markerRadius(eqMagnitutde),
 
         }).bindPopup(``).addTo(myMap);
     };
