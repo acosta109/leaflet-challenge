@@ -12,9 +12,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(myMap);
 
-function markerColour(){};
+function markerColour(depth){
+    // Set a constant green value
+    let green = 200;
+    // Increase the red and blue values as depth increases
+    let red = Math.floor(Math.min(255, depth * 10));
+    let blue = Math.floor(Math.min(255, depth * 5));
+    // Combine the color channels into an RGB color value
+    return "rgb(" + red + "," + green + "," + blue + ")";
+};
 function markerRadius(magnitude){
-    return Math.sqrt(magnitude) * 500
+    return Math.sqrt(magnitude) * 50000
 };
 
 d3.json(url).then(function(response){
@@ -35,16 +43,24 @@ d3.json(url).then(function(response){
     //Confirm we collected the data
     console.log("Locations", earthquakeLocation);
 
+    //Check how to access magnitutde
+    console.log("Magnitutde:", features[0].properties.mag)
+
     //Create the markers
     for(j=0; j<earthquakeLocation.length;j++){
-        let eqMagnitutde = features[i].properties[0];
+        let eqMagnitutde = features[j].properties.mag;
+        let eqDepth = features[j].geometry.coordinates[2];
+        //checking we have the magnitutdes
+        console.log("Magnitutde", eqMagnitutde);
+        //checking we have depths
+        console.log("Depth", eqDepth);
         L.circle(earthquakeLocation[j], {
             fillOpacity: 0.75,
-            color: markerColour(),
-            fillColor: markerColour(),
+            color: markerColour(eqDepth),
+            fillColor: markerColour(eqDepth),
             radius: markerRadius(eqMagnitutde),
 
-        }).bindPopup(``).addTo(myMap);
+        }).bindPopup("Filler. Need to complete").addTo(myMap);
     };
     
 });
