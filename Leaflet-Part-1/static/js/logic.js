@@ -16,8 +16,8 @@ function markerColour(depth){
     // Set a constant green value
     let green = 200;
     // Increase the red and blue values as depth increases
-    let red = Math.floor(Math.min(255, depth * 10));
-    let blue = Math.floor(Math.min(255, depth * 5));
+    let red = Math.floor(Math.min(255, depth * 20));
+    let blue = Math.floor(Math.min(255, depth * 15));
     // Combine the color channels into an RGB color value
     return "rgb(" + red + "," + green + "," + blue + ")";
 };
@@ -60,7 +60,24 @@ d3.json(url).then(function(response){
             fillColor: markerColour(eqDepth),
             radius: markerRadius(eqMagnitutde),
 
-        }).bindPopup("Filler. Need to complete").addTo(myMap);
+        }).bindPopup(`<h1> Coordinates: ${earthquakeLocation[j]}</h1> <br> <h3> Magntitude: ${eqMagnitutde} | Depth: ${eqDepth}</h3>`).addTo(myMap);
     };
+
+    //Create legend control and add to map
+let legend = L.control({position: 'bottomright'});
+legend.onAdd = function () {
+    let div = L.DomUtil.create('div', 'info legend');
+    let colorLabels = ['< 10', '10 - 20', '20 - 30', '30 - 40', '40 - 50', '> 50'];
+
+    // Loop through our color labels and generate a label with a colored square for each interval
+    for (let i = 0; i < colorLabels.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + markerColour((i + 1) * 10) + '"></i> ' +
+            colorLabels[i] + '<br>';
+    }
+    return div;
+};
+legend.addTo(myMap);
+
     
 });
