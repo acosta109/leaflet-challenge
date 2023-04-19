@@ -84,6 +84,3 @@ legend.addTo(myMap);
 ```
 
 <p> This is the last section of my JavaScipt file! It creates the legend and adds it to my map. As a closing note, I'd like to remark I provide copious amounts of comments throughout my written code explaining what each part does and clarifying any parts of my code that could be unique to my stlye of coding. </p>    
-  <img width="1439" alt="Dashboard Monday Morning " src="https://user-images.githubusercontent.com/119609975/233215632-efaadab6-69e8-462f-a12a-38cccc2e36dd.png">
-
-    
